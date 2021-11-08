@@ -1,0 +1,30 @@
+/*Auth Pages*/
+
+nav, footer {
+    display: none;
+} 
+
+.btnCo {
+    padding: 10px;
+    background-color: #0858D3;
+    color: white;
+    border-radius: 2px;
+}
+
+.annuler {
+    padding: 10px;
+    background-color: #2CCB5A;
+    color: white;
+    border-radius: 2px;
+}
+
+.droiteAnnuler {
+    text-align: end;
+    margin-top: -20px;
+}
+
+.error {
+    background-color: red;
+    color: white;
+    padding: 10px;
+}

@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+
+* {
+	margin : 0;
+	padding : 0;
+	font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+ul {
+	list-style: none;
+    padding-left: 0;
+}
+
+.container {
+    width: 100%;
+	max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+	font-size: 30px;
+}
+
+h2 {
+	font-size: 25px;
+	text-transform: uppercase;
+}
+
+.haut {
+	margin-top: 30px;
+}
+
+.flex {
+	display: flex;
+}
+
+.flexC {
+	display: flex;
+	flex-direction: column;
+}
+
+.input1 {
+	width: 100%;
+    margin-top: 15px;
+    border-radius: 2px;
+    padding: 8px;
+}
+
+.space {
+	justify-content: space-between;
+}
+
+/*Menu*/
+
+nav {
+	width: 100%;
+	position: fixed;
+	top:0;
+	right:0;
+	background-color: white;
+}
+
+nav li a {
+	color: #97CBF0;
+}
+
+nav p a {
+	margin-top:20px;
+}
+
+nav p {
+	width: 100%;
+	margin:auto;
+}
+
+.menu li {
+	margin-left:40px;
+	padding-top: 30px;
+	padding-bottom: 20px;	
+}
+
+.menu a:hover {
+	color: #0858D3;
+	text-decoration: none;
+}
+
+#logo {
+    height: 100%;
+}
+
+/*Footer*/
+footer {
+    background-color: #97CBF0;
+}
+
+footer .container {
+	justify-content: left;
+}
+
+footer .container div {
+	padding: 30px;
+}
+
+footer a,p {
+    color: black;
+    font-size: 15px;
+}
+
+h4 {
+	margin-bottom: 10px;
+}
+
+.social a {
+    display: inline-block;
+    text-align: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 45px;
+    line-height: 45px;
+    margin-right: 15px;
+}
+
+.copy p {
+    text-align: center;
+}
+
+.copy {
+	padding-bottom: 50px;
+}
+
+/*Home Page*/
+
+#fond {
+	background: url('../img/fond.jpg') no-repeat top center;
+	height: 600px;	
+}
+
+.accroche {
+	color: white;
+	font-size: 30px;
+	font-style: italic;
+	font-weight: bold;
+	padding-top: 250px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.espace {
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+article {
+	width: 18%;
+	border: 2px solid black;
+	margin-top: 10px;
+}
+
+section article p {
+	padding: 10px;
+}
+
+.tricks {
+	width: 100%;
+}
+
+.details {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.details a {
+	color: blue;
+}
+
+.load {
+    padding: 10px;
+    background-color: #0858D3;
+    color: white;
+    border-radius: 2px;	
+}
+
+.center {
+	text-align: center;
+}
+
+/*Tricks Pages*/

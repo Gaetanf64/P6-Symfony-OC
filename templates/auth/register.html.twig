@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+{% endblock %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+
+        <!--Register Section-->
+        <h2 class="haut contact">Création de votre compte</h2>
+
+        <form action="" method="POST">
+            <input required type="text" name="username" placeholder="Nom d'utilisateur" maxlength='50' class="input1" />
+            <input required type="email" name="email" placeholder="Email" maxlength='50' class="input1" />
+            <input required type="password" name="password" placeholder="Mot de passe" maxlength='255' class="input1" />
+            <input required type="password" name="confirmPassword" placeholder="Confirmer mot de passe" maxlength='255' class="input1" />
+            <button type="submit" name="create" class="btnCo haut">Enregistrer</button>
+        </form>
+
+        <p class="haut droiteAnnuler"><a class="annuler" href="/">Retour à la page d'accueil</a></p>
+
+
+
+    </div>
+
+{% endblock %}

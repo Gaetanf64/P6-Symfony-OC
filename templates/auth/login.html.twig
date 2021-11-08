@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+    <div class="haut container flexC">
+        <!--Login Section-->
+        <h2 class="contact">Se connecter</h2>
+
+        <form action="" method="POST">
+            <input required type="text" name="username" placeholder="Nom d'utilisateur" maxlength='50' class="input1" />
+            <input required type="password" name="password" placeholder="Mot de passe" maxlength='255' class="input1" />
+            <button type="submit" class="btnCo haut">Connexion</button>
+        </form>
+
+        <section>
+
+            <div class="haut flex space">
+                <p><a href="/forgotPassword" ?>Mot de passe oublié ?</a></p>
+                <p><a href="/register" ?>Pas encore inscrit ? Créer un compte gratuit</a></p>
+            </div>
+
+        </section>
+
+    </div>
+
+{% endblock %}
