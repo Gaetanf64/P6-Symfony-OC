@@ -1,13 +1,62 @@
-{# {% extends 'base.html.twig' %} #}
+{% extends 'base.html.twig' %}
 
 {% block title %}Tricks{% endblock %}
 
 {% block body %}
+  <section class="imgFond">
+  </section>
 
-    <div class="container">
-        <section>
-            <img src="img/tricks.jpg" alt="Image de tricks driver" />
-            <p>Tricks Driver</p>
-        </section>
+  <div class="container plan boite">
+    <section>
+      <div class="flex centreAll">
+        <p class="name">Tricks Driver</p>
+        <div>
+          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
+          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+        </div>
+      </div>
+      <a href="img/fond.jpg"><img src="img/fond.jpg" alt="Image de tricks driver" id="une"/></a> 
+    </section>
 
+    <section class="flex space">
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
+      {# <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />  
+      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /> #}
+    </section>
+
+    <section class="haut">
+      <p>Fusce ut risus at odio dapibus aliquam. Cras nulla augue, interdum vel venenatis id, venenatis id libero. Mauris vitae sem sit amet arcu fringilla lobortis. Nulla scelerisque urna ut nibh blandit tristique. Nullam eget risus et lorem rutrum tristique sed nec diam. Integer imperdiet, nisl eu facilisis vulputate, purus nunc elementum neque, id hendrerit urna dui sit amet arcu. Praesent at congue ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis iaculis convallis eleifend. Nulla sodales tincidunt enim aliquet vestibulum. Etiam at auctor dolor. Praesent et tempor massa. Nam mi est, mollis quis leo nec, volutpat euismod justo. Donec fringilla ornare erat.</p>
+    </section>
+
+    <section class="haut flex space">
+      <p class="infos">Groupe</p>
+      <p class="infos">Date de création : 18 août 2018</p>
+      <p class="infos">Date de modification : 18 août 2018</p>
+    </section>
+
+    <section class="haut coms">
+      <form action="" method="POST" class="flex item space">
+        <textarea rows="3" cols="50" maxlength="200"></textarea>
+        <button type="submit" class="btn">Laisser un commentaire</button>
+      </form>
+    </section>
+
+    <section class="flex listeCom space">
+      <img src="img/tricks.jpg" alt="Photo de profil" id="profil" />
+      <p class="boiteCom">Sed molestie auctor libero quis tristique. Praesent porta convallis risus nec posuere. Quisque a velit libero. 
+      Suspendisse potenti.</p>
+    </section>
+
+    <section class="haut">
+      <p class="center"><a href="" class="load">Voir plus</a></p>
+    </section>
+  </div>
 {% endblock %}

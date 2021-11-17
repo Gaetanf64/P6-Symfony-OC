@@ -54,14 +54,14 @@ h2 {
 }
 
 .space {
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 /*Menu*/
 
 nav {
 	width: 100%;
-	position: fixed;
+	/* position: fixed; */
 	top:0;
 	right:0;
 	background-color: white;
@@ -159,7 +159,7 @@ h4 {
 
 article {
 	width: 18%;
-	border: 2px solid black;
+	border: 1px solid black;
 	margin-top: 10px;
 }
 
@@ -193,3 +193,103 @@ section article p {
 }
 
 /*Tricks Pages*/
+
+.imgFond {
+	/* position: fixed; */
+	/* left: 0;
+	right: 0; */
+	object-fit: cover;
+	z-index: -1;
+	display: block;
+	background-image: url('../img/fond.jpg');
+	height: 900px; 
+	filter: blur(4px);
+}
+
+.plan {
+	position: relative; 
+	/* left: 0;
+	right: 0; */
+	/* z-index: 9999; */
+	text-align: center;
+	margin-top: -800px; 
+}
+
+#une {
+	/* background-size: contain; */
+	max-width: 100%;
+	height: auto;
+	border-radius: 2px;
+}
+
+.boite {
+	background-color: white;
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.centreAll {
+	justify-content: center;
+	align-items: center;
+}
+
+.name {
+	color: black;
+	font-size: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px;
+	flex-grow: 2;
+	/* padding-top:-100px; */
+}
+
+.mini {
+	max-width: 80%;
+}
+
+.infos {
+	padding: 10px;
+    background-color: #31d308;
+    color: white;
+    border-radius: 2px;
+	width: 30%;
+}
+
+.coms {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
+.btn {
+    padding: 10px;
+    background-color: #0858D3;
+    color: white;
+    border-radius: 2px;
+	width: 25%;
+	height: 50%;
+}
+
+.item {
+	align-items: center;
+}
+
+textarea {
+	width: 60%;
+}
+
+#profil {
+	width: 10%;
+}
+
+.listeCom {
+	margin: auto;
+	margin-top: 50px;
+}
+
+.boiteCom {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+
