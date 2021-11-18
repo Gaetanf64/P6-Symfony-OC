@@ -90,6 +90,19 @@
           <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
         </p>
       </article>
+
+      {% for trick in tricks %}
+      {% for media in medias %}
+        <article>
+          <img src={{ media.path }} class="tricks" />
+          <p class="details">
+            <a href="">{{ trick.title }}</a>
+            <a href=""><img src="img/pencil.png" alt="Editer" /></a>
+            <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+          </p>
+        </article>
+      {% endfor %}
+      {% endfor %}
     </section>
 
     <section class="haut">
@@ -98,4 +111,7 @@
 
   </div>
 {% endblock %}
+
+
+
 
