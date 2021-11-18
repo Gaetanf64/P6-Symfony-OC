@@ -157,13 +157,13 @@ h4 {
 	flex-wrap: wrap;
 }
 
-article {
+.liste article {
 	width: 18%;
 	border: 1px solid black;
 	margin-top: 10px;
 }
 
-section article p {
+.liste article p {
 	padding: 10px;
 }
 
