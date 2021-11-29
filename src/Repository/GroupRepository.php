@@ -47,4 +47,13 @@ class GroupRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneByTrick($trick)
+    {
+        return $this->createQueryBuilder('g')
+            ->where(':trick MEMBER OF g.tricks')
+            ->setParameter('trick', $trick)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

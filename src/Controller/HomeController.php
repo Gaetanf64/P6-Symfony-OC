@@ -13,11 +13,19 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(TrickRepository $trickRepo, MediaRepository $mediaRepo): Response
+    public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
+
+        $tricks = $trickRepository->findAll();
+
+        foreach ($tricks as $trick) {
+            $trick->medias = $mediaRepository->findOneBy(['trick' => $trick]);
+        };
+
+        //dump($tricks);
+
         return $this->render('home/index.html.twig', [
-            'tricks' => $trickRepo->findAll(),
-            'medias' => $mediaRepo->findAll(),
+            'tricks' => $tricks,
         ]);
     }
 }

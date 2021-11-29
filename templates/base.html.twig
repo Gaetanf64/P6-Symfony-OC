@@ -6,7 +6,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            <link rel="stylesheet" href="css/style.css" />
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         {% endblock %}
 
     </head>
@@ -14,7 +14,7 @@
         <header>
             <nav>
                 <div class="container flex">
-                    <p><a href="/" class=""><img src="img/logo.png" alt="Logo de Snowtricks" id="logo" /></a></p>
+                    <p><a href="/" class=""><img src="{{ asset('img/logo.png') }}" alt="Logo de Snowtricks" id="logo" /></a></p>
                     <ul class="flex menu">
                         <li><a href="/">Accueil</a></li>
                         <li><a href="#tricks">Tricks</a></li>
@@ -34,9 +34,9 @@
                 <div>
                     <h4>Nos réseaux sociaux</h4>
                     <p class="haut social">
-                        <a href="https://fr-fr.facebook.com/" target="blank"><img src="img/facebook.png" alt="Facebook"></a>
-                        <a href="https://www.linkedin.com/home/?originalSubdomain=fr" target="blank"><img src="img/linkedin.png" alt="Linekdin"></a>
-                        <a href="https://twitter.com/?lang=fr" target="blank"><img src="img/twitter.png" alt="Twitter"></a>
+                        <a href="https://fr-fr.facebook.com/" target="blank"><img src="{{ asset('img/facebook.png') }}" alt="Facebook"></a>
+                        <a href="https://www.linkedin.com/home/?originalSubdomain=fr" target="blank"><img src="{{ asset('img/linkedin.png') }}" alt="Linekdin"></a>
+                        <a href="https://twitter.com/?lang=fr" target="blank"><img src="{{asset('img/twitter.png') }}" alt="Twitter"></a>
                     </p>
                 </div>
 

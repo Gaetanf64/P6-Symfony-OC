@@ -33,6 +33,11 @@ class Media
      */
     private $trick;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isMain;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class Media
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getIsMain(): ?bool
+    {
+        return $this->isMain;
+    }
+
+    public function setIsMain(bool $isMain): self
+    {
+        $this->isMain = $isMain;
 
         return $this;
     }

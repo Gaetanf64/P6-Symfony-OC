@@ -25,12 +25,12 @@ class Trick
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $dateCreation;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $dateUpdate;
 
@@ -84,24 +84,24 @@ class Trick
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?string
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation(string $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
         return $this;
     }
 
-    public function getDateUpdate(): ?\DateTimeInterface
+    public function getDateUpdate(): ?string
     {
         return $this->dateUpdate;
     }
 
-    public function setDateUpdate(\DateTimeInterface $dateUpdate): self
+    public function setDateUpdate(string $dateUpdate): self
     {
         $this->dateUpdate = $dateUpdate;
 

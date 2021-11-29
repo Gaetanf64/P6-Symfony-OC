@@ -9,37 +9,41 @@
   <div class="container plan boite">
     <section>
       <div class="flex centreAll">
-        <p class="name">Tricks Driver</p>
+        <p class="name">{{ trick.title }}</p>
         <div>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+          <a href=""><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
+          <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
         </div>
       </div>
-      <a href="img/fond.jpg"><img src="img/fond.jpg" alt="Image de tricks driver" id="une"/></a> 
+      <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} id="une"/></a> 
     </section>
 
     <section class="flex space">
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      <a href="img/tricks.jpg"><img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /></a>
-      {# <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />  
-      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-      <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /> #}
+      {% for media in medias %}
+        <aside class="boiteImg">
+          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} class="mini" /></a>
+        </aside>
+        {# <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
+        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
+        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
+        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
+        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a> #}
+        {# <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />  
+        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
+        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /> #}
+      {% endfor %}
     </section>
 
     <section class="haut">
-      <p>Fusce ut risus at odio dapibus aliquam. Cras nulla augue, interdum vel venenatis id, venenatis id libero. Mauris vitae sem sit amet arcu fringilla lobortis. Nulla scelerisque urna ut nibh blandit tristique. Nullam eget risus et lorem rutrum tristique sed nec diam. Integer imperdiet, nisl eu facilisis vulputate, purus nunc elementum neque, id hendrerit urna dui sit amet arcu. Praesent at congue ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis iaculis convallis eleifend. Nulla sodales tincidunt enim aliquet vestibulum. Etiam at auctor dolor. Praesent et tempor massa. Nam mi est, mollis quis leo nec, volutpat euismod justo. Donec fringilla ornare erat.</p>
+      <p>{{ trick.description }}</p>
     </section>
 
     <section class="haut flex space">
-      <p class="infos">Groupe</p>
-      <p class="infos">Date de création : 18 août 2018</p>
-      <p class="infos">Date de modification : 18 août 2018</p>
+      <p class="infos">{{ groupe.name }}</p>
+      <p class="infos">Date de création : {{ trick.dateCreation }}</p>
+      <p class="infos">Date de modification : {{ trick.dateUpdate }}</p>
     </section>
 
     <section class="haut coms">
@@ -51,7 +55,7 @@
 
     <section>
       <article class="flex listeCom space">
-        <img src="img/tricks.jpg" alt="Photo de profil" id="profil" />
+        <img src="{{ asset('img/tricks.jpg') }}" alt="Photo de profil" id="profil" />
         <p class="boiteCom">Sed molestie auctor libero quis tristique. Praesent porta convallis risus nec posuere. Quisque a velit libero. 
         Suspendisse potenti.</p>
       </article>
