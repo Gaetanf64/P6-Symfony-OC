@@ -15,35 +15,39 @@
           <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
         </div>
       </div>
-      <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} id="une"/></a> 
+      {% for media in trick.media %}
+        {% if media.isMain == 1 %}
+          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} id="une"/></a>
+        {% endif %}
+      {% endfor %}
     </section>
 
-    <section class="flex space">
-      {% for media in medias %}
-        <aside class="boiteImg">
-          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} class="mini" /></a>
-        </aside>
-        {# <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
-        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
-        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
-        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a>
-        <a href="img/tricks.jpg"><img src="{{ asset('img/tricks.jpg') }}" alt="Image de tricks driver" class="mini" /></a> #}
-        {# <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />  
-        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" />
-        <img src="img/tricks.jpg" alt="Image de tricks driver" class="mini" /> #}
+    <section class="flexTrick space">
+      {% for media in trick.media %}
+        {% if media.isMain == 0 %}
+          {% if media.type == 1 %}
+            <aside class="boiteImg">
+              <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} class="mini" /></a>
+            </aside>
+          {% endif %}
+          {% if media.type == 0 %}
+            <aside class="boiteImg">
+              <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(media.path) }}" width="100%" height="100%" allowfullscreen></iframe></div>
+            </aside>
+          {% endif %}
+        {% endif %}
       {% endfor %}
     </section>
 
     <section class="haut">
       <p>{{ trick.description }}</p>
+      <p class="auteur">Crée par {{ trick.user.username }}</p>
     </section>
 
     <section class="haut flex space">
-      <p class="infos">{{ groupe.name }}</p>
-      <p class="infos">Date de création : {{ trick.dateCreation }}</p>
-      <p class="infos">Date de modification : {{ trick.dateUpdate }}</p>
+      <p class="infos">{{ trick.groupe.name }}</p>
+      <p class="infos">Date de création : {{ trick.dateCreation|date("d-m-Y") }}</p>
+      <p class="infos">Date de modification : {{ trick.dateUpdate|date("d-m-Y") }}</p>
     </section>
 
     <section class="haut coms">
@@ -54,14 +58,21 @@
     </section>
 
     <section>
-      <article class="flex listeCom space">
-        <img src="{{ asset('img/tricks.jpg') }}" alt="Photo de profil" id="profil" />
-        <p class="boiteCom">Sed molestie auctor libero quis tristique. Praesent porta convallis risus nec posuere. Quisque a velit libero. 
-        Suspendisse potenti.</p>
-      </article>
+      {% for comment in trick.comments %}
+        <article class="flex listeCom">
+          <div class="boiteProfil">
+            <img src="{{ asset(comment.user.photoProfil) }}" alt="Photo de profil" id="profil" />
+            <p>{{ comment.user.username }}</p>
+          </div>
+          <div class="boiteComs">
+            <p class="boiteCom">{{ comment.content }}</p>
+            <p><span class="bas">Date de création : {{ comment.dateCreation|date("d-m-Y") }}</span></p>
+          </div>
+        </article>
+      {% endfor %}
     </section>
 
-    <section class="haut">
+    <section class="plus">
       <p class="center"><a href="" class="load">Voir plus</a></p>
     </section>
   </div>

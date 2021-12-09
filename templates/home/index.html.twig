@@ -10,97 +10,20 @@
 
   <div class="container">
     <section class="haut flex espace liste" id="tricks">
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="tricksDriver">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-      <article>
-        <img src="img/tricks.jpg" class="tricks" />
-        <p class="details">
-          <a href="">Trick Driver</a>
-          <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-          <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-        </p>
-      </article>
-
       {% for trick in tricks %}
       {% for media in trick.media %}
-        <article>
-          <img src={{ media.path }} alt={{ trick.title }} class="tricks" />
-          <p class="details">
-            <a href={{'tricks/' ~ trick.id }}>{{ trick.title }}</a>
-            <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-            <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-          </p>
-        </article>
+        {% if media.isMain == 1 %}
+          <article>
+            <img src={{ media.path }} alt={{ trick.title }} class="tricks" />
+            <div class="details flex">
+              <p><a href={{'tricks/' ~ trick.id }}>{{ trick.title }}</a></p>
+              <div class="bouton">
+                <a href=""><img src="img/pencil.png" alt="Editer" /></a>
+                <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+              </div>
+            </div>
+          </article>
+        {% endif %}
       {% endfor %}
       {% endfor %}
     </section>
