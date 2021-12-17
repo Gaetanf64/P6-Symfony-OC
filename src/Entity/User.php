@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -32,13 +34,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 254,
+     *      minMessage = "Votre mot de passe doit contenir au moins 8 caractères.",
+     *      maxMessage = "Votre mot de passe ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
+     * @Assert\Regex(
+     *     pattern = "^(?=.*[a-z])(?=.*[A-Z])^",
+     *     match = true,
+     *     message = "Le mot de passe doit contenir au moins une minuscule et une majuscule !"
+     * )
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères !",
+     *      maxMessage = "Votre nom d'utilisateur ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
      */
     private $username;
 
@@ -71,6 +95,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @Assert\EqualTo(
+     *      propertyPath = "password",
+     *      message = "Le mot de passe n'est pas identique."
+     * )
+     */
+    private $confirmPassword;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActivated;
 
     public function __construct()
     {
@@ -283,6 +320,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    public function getIsActivated(): ?bool
+    {
+        return $this->isActivated;
+    }
+
+    public function setIsActivated(bool $isActivated): self
+    {
+        $this->isActivated = $isActivated;
 
         return $this;
     }
