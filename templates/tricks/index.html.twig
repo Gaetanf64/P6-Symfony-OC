@@ -10,14 +10,16 @@
     <section>
       <div class="flex centreAll">
         <p class="name">{{ trick.title }}</p>
-        <div>
-          <a href=""><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
-          <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
-        </div>
+        {% if app.user %}
+          <div>
+            <a href=""><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
+            <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
+          </div>
+        {% endif %}
       </div>
       {% for media in trick.media %}
         {% if media.isMain == 1 %}
-          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} id="une"/></a>
+          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.slug }} id="une"/></a>
         {% endif %}
       {% endfor %}
     </section>
@@ -50,15 +52,26 @@
       <p class="infos">Date de modification : {{ trick.dateUpdate|date("d-m-Y") }}</p>
     </section>
 
-    <section class="haut coms">
-      <form action="" method="POST" class="flex item space">
-        <textarea rows="3" cols="50" maxlength="200"></textarea>
-        <button type="submit" class="btn">Laisser un commentaire</button>
-      </form>
-    </section>
+    {% if app.user %}
+      <section class="haut coms">
+        {# <form action="" method="POST" class="flex item space">
+          <textarea rows="3" cols="50" maxlength="200"></textarea>
+          <button type="submit" class="btn">Laisser un commentaire</button>
+        </form> #}
+          {{ form_start(formComment) }}
+            {{ form_widget(formComment.content) }}
+          {{ form_end(formComment) }}
+        
+        {% for message in app.flashes('comment') %}
+            <div class="alert alert-success flash">
+                {{ message }}
+            </div>
+        {% endfor %}
+      </section>
+    {% endif %}
 
     <section>
-      {% for comment in trick.comments %}
+      {% for comment in comments %}
         <article class="flex listeCom">
           <div class="boiteProfil">
             <img src="{{ asset(comment.user.photoProfil) }}" alt="Photo de profil" id="profil" />

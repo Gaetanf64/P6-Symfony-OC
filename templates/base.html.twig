@@ -18,8 +18,13 @@
                     <ul class="flex menu">
                         <li><a href="/">Accueil</a></li>
                         <li><a href="#tricks">Tricks</a></li>
-                        <li><a href="/register">S'enregistrer</a></li>
-                        <li><a href="/login">Connexion</a></li>
+                        {% if app.user %}
+                            <li><a href="/profil">Profil</a></li>
+                            <li><a href="{{ path('account_logout') }}">Déconnexion</a></li>
+                        {% else %}
+                            <li><a href="{{ path('register') }}">S'enregistrer</a></li>
+                            <li><a href="{{ path('account_login') }}">Connexion</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>

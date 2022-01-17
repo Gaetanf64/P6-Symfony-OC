@@ -28,7 +28,7 @@ class UserFixtures extends Fixture
                 'is_activated' => 1
             ],
             2 => [
-                'email' => 'gaetan.fouillet@greta-cfa-aquitaine.academy',
+                'email' => 'greta@gmail.com',
                 'roles' => 'ROLE_USER',
                 'password' => 'greta',
                 'username' => 'GaetanGreta',

@@ -16,11 +16,13 @@
           <article>
             <img src={{ media.path }} alt={{ trick.title }} class="tricks" />
             <div class="details flex">
-              <p><a href={{'tricks/' ~ trick.id }}>{{ trick.title }}</a></p>
-              <div class="bouton">
-                <a href=""><img src="img/pencil.png" alt="Editer" /></a>
-                <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
-              </div>
+              <p><a href={{'tricks/' ~ trick.slug }}>{{ trick.title }}</a></p>
+              {% if app.user %}
+                <div class="bouton">
+                  <a href=""><img src="img/pencil.png" alt="Editer" /></a>
+                  <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+                </div>
+              {% endif %}
             </div>
           </article>
         {% endif %}

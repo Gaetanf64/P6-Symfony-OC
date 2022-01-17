@@ -15,14 +15,6 @@
         <!--Register Section-->
         <h2 class="haut contact">Création de votre compte</h2>
 
-        {# <form action="" method="POST">
-            <input required type="text" name="username" placeholder="Nom d'utilisateur" maxlength='50' class="input1" />
-            <input required type="email" name="email" placeholder="Email" maxlength='50' class="input1" />
-            <input required type="password" name="password" placeholder="Mot de passe" maxlength='255' class="input1" />
-            <input required type="password" name="confirmPassword" placeholder="Confirmer mot de passe" maxlength='255' class="input1" />
-            <button type="submit" name="create" class="btnCo haut">Enregistrer</button>
-        </form> #}
-
         {{ form_start(formRegister) }}
             {{ form_widget(formRegister.username) }}
             {{ form_errors(formRegister.username) }}
@@ -39,7 +31,11 @@
 
         <p class="haut droiteAnnuler"><a class="annuler" href="/">Retour à la page d'accueil</a></p>
 
-
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success flash">
+                {{ message }}
+            </div>
+        {% endfor %}
 
     </div>
 

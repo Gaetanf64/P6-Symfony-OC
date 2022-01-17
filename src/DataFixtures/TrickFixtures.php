@@ -15,61 +15,71 @@ class TrickFixtures extends Fixture
                 'title' => 'Mute',
                 'description' => 'Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'mute'
             ],
             2 => [
                 'title' => 'Melancholie',
                 'description' => 'Saisie de la carre backside de la planche, entre les deux pieds, avec la main avant.',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'melancholie'
             ],
             3 => [
                 'title' => 'Indy',
                 'description' => 'Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière.',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'indy'
             ],
             4 => [
                 'title' => 'Stalefish ',
                 'description' => 'Saisie de la carre backside de la planche entre les deux pieds avec la main arrière.',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'stalefish'
             ],
             5 => [
                 'title' => 'Tail Grab',
                 'description' => 'Saisie de la partie arrière de la planche, avec la main arrière.',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'tail-grab'
             ],
             6 => [
                 'title' => 'Truck Driver',
                 'description' => 'Saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture).',
                 'user' => 3,
-                'groupe' => 1
+                'groupe' => 1,
+                'slug' => 'truck-driver'
             ],
             7 => [
                 'title' => '180',
                 'description' => "Un 180 désigne un demi-tour, soit 180 degrés d'angle.",
                 'user' => 3,
-                'groupe' => 2
+                'groupe' => 2,
+                'slug' => '180'
             ],
             8 => [
                 'title' => '1080',
                 'description' => 'Un 1080 ou big foot pour trois tours de rotations.',
                 'user' => 3,
-                'groupe' => 2
+                'groupe' => 2,
+                'slug' => '1080'
             ],
             9 => [
                 'title' => '900',
                 'description' => 'Un 900 pour deux tours et demi de rotations.',
                 'user' => 3,
-                'groupe' => 2
+                'groupe' => 2,
+                'slug' => '900'
             ],
             10 => [
                 'title' => 'Front Flip',
                 'description' => 'Un flip est une rotation verticale. Le front flip consiste à faire une rotation verticale en avant.',
                 'user' => 3,
-                'groupe' => 3
+                'groupe' => 3,
+                'slug' => 'front-flip'
             ],
         ];
 
@@ -77,6 +87,7 @@ class TrickFixtures extends Fixture
             $trick = new Trick();
             $trick->setTitle($value['title']);
             $trick->setDescription($value['description']);
+            $trick->setSlug($value['slug']);
             $trick->setDateCreation(new \DateTime(date('Y-m-d H:i:s')));
             $trick->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
 

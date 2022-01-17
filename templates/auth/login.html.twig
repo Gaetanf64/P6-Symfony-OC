@@ -13,11 +13,31 @@
         <!--Login Section-->
         <h2 class="contact">Se connecter</h2>
 
-        <form action="" method="POST">
-            <input required type="text" name="username" placeholder="Nom d'utilisateur" maxlength='50' class="input1" />
-            <input required type="password" name="password" placeholder="Mot de passe" maxlength='255' class="input1" />
-            <button type="submit" class="btnCo haut">Connexion</button>
+        {% for message in app.flashes('validation') %}
+            <div class="alert alert-success flash">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form action="{{ path('account_login') }}" method="POST">
+            <input required type="text" name="_username" value="{{ last_username }}" placeholder="Nom d'utilisateur" maxlength='20' class="input1" />
+            <input required type="password" name="_password" placeholder="Mot de passe" maxlength='255' class="input1" />
+            <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <button type="submit" name="connexion" class="btnCo haut">Connexion</button>
         </form>
+
+        {% if error %}
+            <p class="error haut">Erreur de mot de passe ou de nom d'utilisateur.</p>
+        {% endif %}
+
+         {# {{ form_start(formLogin) }}
+            {{ form_widget(formLogin.username) }}
+            {{ form_errors(formLogin.username) }}
+
+            {{ form_widget(formLogin.password) }}
+            {{ form_errors(formLogin.password) }}
+        {{ form_end(formLogin) }} #}
 
         <section>
             <div class="haut flex space">
