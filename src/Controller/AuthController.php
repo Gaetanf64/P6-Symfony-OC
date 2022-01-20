@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\PasswordProfil;
 use App\Entity\User;
 use App\Form\ForgotPasswordFormType;
 use App\Form\NewPasswordFormType;
+use App\Form\ProfilFormType;
+use App\Form\PasswordFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +19,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AuthController extends AbstractController
 {
@@ -75,22 +80,6 @@ class AuthController extends AbstractController
             $manager->flush();
 
             //Envoi du mail de confirmation
-            // $email = (new Email())
-            //     ->from('gaetan.fouillet@greta-cfa-aquitaine.academy')
-            //     ->to('gaetan.fouillet@greta-cfa-aquitaine.academy')
-            //     ->subject('Confirmation de votre inscription');
-            // // ->text('Sending emails is fun again!')
-            // // ->html('<p>Bonjour</p>');
-
-            // $mailer->send($email);
-            // $content = $this->renderView('emails/registration.html.twig', [
-
-            // ]);
-
-            // $headers = 'From: "gaetan.fouillet@greta-cfa-aquitaine.academy"';
-            // $headers .= 'Content-Type: text/html; charset="iso-8859-1"';
-            // mail($user->getEmail(), $subject, $content, $headers);
-
             $email = (new TemplatedEmail())
                 ->from('gaetan.fouillet@greta-cfa-aquitaine.academy')
                 ->to($user->getEmail())
@@ -260,6 +249,109 @@ class AuthController extends AbstractController
 
         return $this->render('auth/newPassword.html.twig', [
             'formNewPassword' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Profil function
+     *
+     * @Route("/profil", name="profil")
+     *
+     */
+    public function profil(Request $request, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger): Response
+    {
+        $user = $this->getUser();
+
+        //PARTIE MODIFIER INFOS USER
+
+        //Recupère l'avatar actuel
+        $avatarPresent = $user->getPhotoProfil();
+
+        $form = $this->createForm(ProfilFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $upload */
+            $upload = $form->get('photo_profil')->getData();
+
+            //SI upload pas null et different de la photo de profil actuelle
+            if ($upload !== null && $upload !== $user->getPhotoProfil()) {
+                $originalFilename = pathinfo($upload->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+
+                //Nom du fichier qui apparîtra dans la bdd
+                $newFilename = 'img/' . $safeFilename . '-' . uniqid() . '.' . $upload->guessExtension();
+
+
+                if ($avatarPresent !== 'default.png') {
+                    // Place le fichier dans le chemin défini
+                    try {
+                        $upload->move(
+                            $this->getParameter('upload_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    //Met à jour le fichier dans la bdd
+                    $user->setPhotoProfil($newFilename);
+                }
+            } else {
+                $user->setPhotoProfil($avatarPresent);
+            }
+
+            //Met à jour la date de modification de l'utilisateur
+            $user->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
+
+            //On instancie doctrine
+            $manager = $this->getDoctrine()->getManager();
+
+            //On hydrate
+            $manager->persist($user);
+
+            //Envoi dans la base de données
+            $manager->flush();
+
+            $this->addFlash('profil', 'Votre profil a été mis à jour.');
+        }
+
+        //PARTIE CHANGER MOT DE PASSE
+
+        $passwordReset = new PasswordProfil;
+
+        $formPass = $this->createForm(PasswordFormType::class, $passwordReset);
+
+        $formPass->handleRequest($request);
+
+        if ($formPass->isSubmitted() && $formPass->isValid()) {
+
+            $newPassword = $passwordReset->getNewPasswordProfil();
+            $password = $encoder->encodePassword($user, $newPassword);
+            $user->setPassword($password);
+
+            $user->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
+
+            //On instancie doctrine
+            $manager = $this->getDoctrine()->getManager();
+
+            //On hydrate
+            $manager->persist($user);
+
+            //Envoi dans la base de données
+            $manager->flush();
+
+            $this->addFlash('mdp', 'Votre mot de passe a été mis à jour.');
+        }
+
+
+
+        return $this->render('auth/profil.html.twig', [
+            'user' => $user,
+            'formProfil' => $form->createView(),
+            'formPass' => $formPass->createView(),
         ]);
     }
 

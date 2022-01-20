@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Trick{% endblock %}
+
+{% block body %}
+  <section class="imgFond">
+  </section>
+
+  <div class="container plan boite">
+   {{ form_start(formAdd) }}
+    <section>
+      <div class="flex centreAll">
+        <p class="name">Ajouter une Trick</p>
+        {% if app.user %}
+          <div>
+            <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
+          </div>
+        {% endif %}
+      </div>
+      {# {% for media in trick.media %}
+        {% if media.isMain == 1 %}
+          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.slug }} id="une"/></a>
+        {% endif %}
+      {% endfor %} #}
+    </section>
+
+    {# <section class="flexTrick space">
+      {% for media in trick.media %}
+        {% if media.isMain == 0 %}
+          {% if media.type == 1 %}
+            <aside class="boiteImg">
+              <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} class="mini" /></a>
+            </aside>
+          {% endif %}
+          {% if media.type == 0 %}
+            <aside class="boiteImg">
+              <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(media.path) }}" width="100%" height="100%" allowfullscreen></iframe></div>
+            </aside>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </section> #}
+
+    <section class="haut">
+        <p>{{ form_label(formAdd.title) }}</p>
+        <p>{{ form_widget(formAdd.title) }}</p>
+    </section>
+
+    <section class="haut">
+        <p>{{ form_label(formAdd.description) }}</p>
+        <p>{{ form_widget(formAdd.description) }}</p>
+    </section>
+
+    <section class="haut">
+        <p>{{ form_label(formAdd.media) }}</p>
+        <p>{{ form_widget(formAdd.media) }}</p>
+    </section>
+
+     {{ form_end(formAdd) }}
+  </div>
+{% endblock %}

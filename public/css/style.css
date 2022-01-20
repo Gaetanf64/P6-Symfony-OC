@@ -339,4 +339,38 @@ textarea {
 	margin-top: 60px;
 }
 
+/*Profil Page*/
+.gras {
+	font-weight: bold;
+}
+
+
+.avatar {
+	max-width: 100px;
+	height: 100px;	
+}
+
+.box {
+	border: 2px solid #97CBF0;
+	border-radius: 10px;
+	padding: 15px;
+}
+
+.backFond {
+	background-color: #97CBF0;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.input2 {
+	width: 80%;
+    margin-top: 15px;
+    border-radius: 2px;
+    padding: 8px;
+}
+
+input[type=file]::-webkit-file-upload-button {
+	border: 1px solid grey;
+	background: #97CBF0;
+}
 

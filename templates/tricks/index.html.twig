@@ -12,7 +12,7 @@
         <p class="name">{{ trick.title }}</p>
         {% if app.user %}
           <div>
-            <a href=""><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
+            <a href="{{ path('edit_trick', { 'slug': trick.slug }) }}"><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
             <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
           </div>
         {% endif %}
@@ -63,7 +63,7 @@
           {{ form_end(formComment) }}
         
         {% for message in app.flashes('comment') %}
-            <div class="alert alert-success flash">
+            <div class="haut">
                 {{ message }}
             </div>
         {% endfor %}

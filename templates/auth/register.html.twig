@@ -32,7 +32,7 @@
         <p class="haut droiteAnnuler"><a class="annuler" href="/">Retour à la page d'accueil</a></p>
 
         {% for message in app.flashes('success') %}
-            <div class="alert alert-success flash">
+            <div class="haut">
                 {{ message }}
             </div>
         {% endfor %}

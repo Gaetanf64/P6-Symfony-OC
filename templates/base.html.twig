@@ -7,6 +7,7 @@
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+            <link rel="icon" href="{{ asset('favicon.png') }}" />
         {% endblock %}
 
     </head>
@@ -17,9 +18,10 @@
                     <p><a href="/" class=""><img src="{{ asset('img/logo.png') }}" alt="Logo de Snowtricks" id="logo" /></a></p>
                     <ul class="flex menu">
                         <li><a href="/">Accueil</a></li>
-                        <li><a href="#tricks">Tricks</a></li>
+                        <li><a href="/#tricks">Tricks</a></li>
                         {% if app.user %}
-                            <li><a href="/profil">Profil</a></li>
+                            <li><a href="{{ path('add_trick') }}">Ajouter Trick</a></li>
+                            <li><a href="{{ path('profil') }}">Profil</a></li>
                             <li><a href="{{ path('account_logout') }}">Déconnexion</a></li>
                         {% else %}
                             <li><a href="{{ path('register') }}">S'enregistrer</a></li>

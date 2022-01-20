@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+
+        <!--Profil Section-->
+        {# <h2 class="haut contact">Page Profil</h2> #}
+
+        <section class="haut center box">
+            <h4 class="backFond">Vos informations</h4>
+            <p><img src="{{ asset(user.photoProfil) }}" alt="Photo de profil" class="avatar" /></p>
+            <p>Nom d'utilisateur : <span class="gras">{{ user.username }}</span></p>
+            <p>Email : <span class="gras">{{ user.email }}</span></p>
+            <p>Date de création du compte : <span class="gras">{{ user.dateCreation|date("d-m-Y") }}</span></p>
+        </section>
+
+        <section class="haut center box">
+            <h4 class="backFond">Modifier vos informations</h4>
+            {{ form_start(formProfil) }}
+                <p>
+                    {{ form_widget(formProfil.username) }}
+                    {{ form_errors(formProfil.username) }}
+                </p>
+                <p>
+                    {{ form_widget(formProfil.email) }}
+                    {{ form_errors(formProfil.email) }}
+                </p>
+                 <p>
+                    {{ form_widget(formProfil.photo_profil) }}
+                    {{ form_errors(formProfil.photo_profil) }}
+                </p>
+            {{ form_end(formProfil) }}
+        </section>
+
+        {% for message in app.flashes('profil') %}
+            <div class="haut">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <section class="haut center box">
+            <h4 class="backFond">Modifier votre mot de passe</h4>
+            {{ form_start(formPass) }}
+                <p>
+                    {{ form_widget(formPass.password) }}
+                    {{ form_errors(formPass.password) }}
+                </p>
+                <p>
+                    {{ form_widget(formPass.newPasswordProfil) }}
+                    {{ form_errors(formPass.newPasswordProfil) }}
+                </p>
+                <p>
+                    {{ form_widget(formPass.confirmPasswordProfil) }}
+                    {{ form_errors(formPass.confirmPasswordProfil) }}
+                </p>
+            {{ form_end(formPass) }}
+        </section>
+        
+
+        {% for message in app.flashes('mdp') %}
+            <div class="haut">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
