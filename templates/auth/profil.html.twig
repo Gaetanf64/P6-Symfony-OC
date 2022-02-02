@@ -10,6 +10,12 @@
         <!--Profil Section-->
         {# <h2 class="haut contact">Page Profil</h2> #}
 
+        {% for message in app.flashes('supprime') %}
+            <div class="haut">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <section class="haut center box">
             <h4 class="backFond">Vos informations</h4>
             <p><img src="{{ asset(user.photoProfil) }}" alt="Photo de profil" class="avatar" /></p>

@@ -13,7 +13,7 @@
         {% if app.user %}
           <div>
             <a href="{{ path('edit_trick', { 'slug': trick.slug }) }}"><img src="{{ asset('img/pencil.png') }}" alt="Editer" /></a>
-            <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
+            <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
           </div>
         {% endif %}
       </div>

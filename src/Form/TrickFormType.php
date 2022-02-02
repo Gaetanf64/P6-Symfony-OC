@@ -40,21 +40,21 @@ class TrickFormType extends AbstractType
                     'class' => 'input1',
                 ],
             ])
-            ->add('media', FileType::class, [
-                'label' => 'Choisir une ou des image(s)',
-                'mapped' => false,
-                'required' => false,
-                //'multiple' => true,
-                'data_class' => null,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                    ])
-                ],
-                'attr' => [
-                    'class' => 'input2',
-                ]
-            ])
+            // ->add('media', FileType::class, [
+            //     'label' => 'Choisir une ou des image(s)',
+            //     'mapped' => false,
+            //     'required' => false,
+            //     //'multiple' => true,
+            //     'data_class' => null,
+            //     'constraints' => [
+            //         new File([
+            //             'maxSize' => '1024k',
+            //         ])
+            //     ],
+            //     'attr' => [
+            //         'class' => 'input2',
+            //     ]
+            // ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn haut',

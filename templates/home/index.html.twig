@@ -20,7 +20,7 @@
               {% if app.user %}
                 <div class="bouton">
                   <a href="{{ path('edit_trick', { 'slug': trick.slug }) }}"><img src="img/pencil.png" alt="Editer" /></a>
-                  <a href=""><img src="img/corbeille.png" alt="Corbeille" /></a>
+                  <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="img/corbeille.png" alt="Corbeille" /></a>
                 </div>
               {% endif %}
             </div>

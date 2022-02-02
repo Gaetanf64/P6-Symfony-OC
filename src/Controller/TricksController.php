@@ -190,6 +190,28 @@ class TricksController extends AbstractController
     }
 
     /**
+     * Delete trick par utilisateur
+     *
+     * @Route("/tricks/delete/{id}", name="delete_trick")
+     *
+     * @param Trick $trick
+     *
+     * @return Response
+     */
+    public function delete(Trick $trick): Response
+    {
+        //On instancie doctrine
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->remove($trick);
+        $manager->flush();
+
+        $this->addFlash('supprime', 'La trick a bien été supprimé.');
+
+        return $this->redirectToRoute('profil');
+    }
+
+    /**
      * Transform (e.g. "Hello World") into a slug (e.g. "hello-world").
      *
      * @param string $string
