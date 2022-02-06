@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Trick;
 use App\Entity\Group;
-use App\Entity\Media;
+use App\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
 class TrickFormType extends AbstractType
@@ -25,7 +26,7 @@ class TrickFormType extends AbstractType
                 'label' => 'Titre',
                 'attr' => [
                     'placeholder' => 'Titre du trick',
-                    'class' => 'input1',
+                    'class' => 'input2',
                 ],
             ])
             ->add('groupe', EntityType::class, [
@@ -37,8 +38,29 @@ class TrickFormType extends AbstractType
                 'label' => 'Description',
                 'attr' => [
                     'placeholder' => 'Description du trick',
-                    'class' => 'input1',
+                    'class' => 'input2',
                 ],
+            ])
+            ->add('imageMain', FileType::class,  [
+                'label' => 'Image principale',
+                'mapped' => false,
+                'required' => false,
+                'data_class' => null,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                    ])
+                ],
+                'attr' => [
+                    'class' => 'input2',
+                ],
+            ])
+            ->add('images', CollectionType::class, [
+                'label' => 'Choisir une ou des image(s)',
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                //'by_reference' => false,
             ])
             // ->add('media', FileType::class, [
             //     'label' => 'Choisir une ou des image(s)',

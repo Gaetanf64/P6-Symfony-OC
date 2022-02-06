@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Media;
+use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Repository\TrickRepository;
@@ -113,7 +113,7 @@ class TricksController extends AbstractController
     public function add(Request $request, SluggerInterface $slugger): Response
     {
         $trick = new Trick();
-        $media = new Media();
+        $image = new Image();
 
 
 
@@ -126,7 +126,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var UploadedFile $upload */
-            $upload = $form->get('media')->getData();
+            $upload = $form->get('imageMain')->getData();
 
             // //SI upload pas null et different du  actuelle
             // if ($upload !== null && $upload !== $user->getPhotoProfil()) {
@@ -152,19 +152,22 @@ class TricksController extends AbstractController
             }
 
             //Met à jour le fichier dans la bdd
-            $media->setPath($newFilename);
-            $media->setIsMain(0);
-            $media->setType(1);
+            for ($i = 0; $i < 8; $i++) {
+                foreach ($trick->getImages() as $image) {
+                    $image->setPath($newFilename);
+                }
+            }
             // }
 
             $trick->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
             $trick->setDateCreation(new \DateTime(date('Y-m-d H:i:s')));
+            $trick->setimageMain($newFilename);
 
 
             //Lien avec d'autres bases
             $trick->setUser($this->getUser());
             //$media->setTrick($trick->getId());
-            $trick->addMedium($media);
+            //$trick->addImage($image);
 
             //On passe le titre en slug
             $title = $trick->getTitle();

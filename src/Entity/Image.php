@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MediaRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MediaRepository::class)
+ * @ORM\Entity(repositoryClass=ImageRepository::class)
  */
-class Media
+class Image
 {
     /**
      * @ORM\Id
@@ -18,41 +18,19 @@ class Media
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $type;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $path;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="media")
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isMain;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getType(): ?bool
-    {
-        return $this->type;
-    }
-
-    public function setType(bool $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getPath(): ?string
@@ -75,18 +53,6 @@ class Media
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
-
-        return $this;
-    }
-
-    public function getIsMain(): ?bool
-    {
-        return $this->isMain;
-    }
-
-    public function setIsMain(bool $isMain): self
-    {
-        $this->isMain = $isMain;
 
         return $this;
     }

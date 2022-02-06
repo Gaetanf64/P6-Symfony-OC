@@ -17,27 +17,19 @@
           </div>
         {% endif %}
       </div>
-      {% for media in trick.media %}
-        {% if media.isMain == 1 %}
-          <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.slug }} id="une"/></a>
-        {% endif %}
-      {% endfor %}
+      <a href="{{ asset(trick.imageMain) }}"><img src="{{ asset(trick.imageMain) }}" alt={{ trick.slug }} id="une"/></a> 
     </section>
 
     <section class="flexTrick space">
-      {% for media in trick.media %}
-        {% if media.isMain == 0 %}
-          {% if media.type == 1 %}
-            <aside class="boiteImg">
-              <a href="{{ asset(media.path) }}"><img src="{{ asset(media.path) }}" alt={{ trick.title }} class="mini" /></a>
-            </aside>
-          {% endif %}
-          {% if media.type == 0 %}
-            <aside class="boiteImg">
-              <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(media.path) }}" width="100%" height="100%" allowfullscreen></iframe></div>
-            </aside>
-          {% endif %}
-        {% endif %}
+      {% for image in trick.images %}
+        <aside class="boiteImg">
+          <a href="{{ asset(image.path) }}"><img src="{{ asset(image.path) }}" alt={{ trick.title }} class="mini" /></a>
+        </aside>
+     {% endfor %}
+     {%  for video in trick.videos %}
+        <aside class="boiteImg">
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(video.url) }}" width="100%" height="100%" allowfullscreen></iframe></div>
+        </aside>    
       {% endfor %}
     </section>
 

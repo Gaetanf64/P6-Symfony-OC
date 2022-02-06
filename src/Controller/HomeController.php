@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\MediaRepository;
+// use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +13,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
+    public function index(TrickRepository $trickRepository): Response
     {
 
         $tricks = $trickRepository->findAll();
 
-        foreach ($tricks as $trick) {
-            $trick->medias = $mediaRepository->findOneBy(['trick' => $trick]);
-        };
+        // foreach ($tricks as $trick) {
+        //     $trick->medias = $mediaRepository->findOneBy(['trick' => $trick]);
+        // };
 
         //dump($tricks);
 

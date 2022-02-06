@@ -52,8 +52,13 @@
     </section>
 
     <section class="haut">
-        <p>{{ form_label(formAdd.media) }}</p>
-        <p>{{ form_widget(formAdd.media) }}</p>
+        <p>{{ form_label(formAdd.imageMain) }}</p>
+        <p>{{ form_widget(formAdd.imageMain) }}</p>
+    </section>
+
+    <section class="haut">
+       {{ form_label(formAdd.images) }}
+       {{ form_widget(formAdd.images) }}
     </section>
 
      {{ form_end(formAdd) }}
