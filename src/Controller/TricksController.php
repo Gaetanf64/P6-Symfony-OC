@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
+use App\Entity\Video;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use App\Form\TrickFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Filesystem\Filesystem;
 
 class TricksController extends AbstractController
 {
@@ -25,7 +27,7 @@ class TricksController extends AbstractController
      */
     public function index($slug, TrickRepository $trickRepository, Request $request, CommentRepository $commentRepository): Response
     {
-        $trick = $trickRepository->findOneBySlug($slug);
+        $trick = $trickRepository->findOneBySlug($slug, array('dateCreation' => 'DESC'));
 
         if (!$trick) {
             return $this->redirectToRoute('home');
@@ -112,12 +114,11 @@ class TricksController extends AbstractController
      */
     public function add(Request $request, SluggerInterface $slugger): Response
     {
+        if ($this->getUser() === null) {
+            return $this->render('home/index.html.twig');
+        }
+
         $trick = new Trick();
-        $image = new Image();
-
-
-
-        //$user = $userRepository->findOneById($this->getUser());
 
         $form = $this->createForm(TrickFormType::class, $trick);
 
@@ -125,40 +126,74 @@ class TricksController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //RECUPERE DONNEES DE L'IMAGE PRINCIPALE
+
             /** @var UploadedFile $upload */
             $upload = $form->get('imageMain')->getData();
 
-            // //SI upload pas null et different du  actuelle
-            // if ($upload !== null && $upload !== $user->getPhotoProfil()) {
-            $originalFilename = pathinfo($upload->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
+            if ($upload === null) {
+                $upload = 'fond.jpg';
 
-            //Nom du fichier qui apparîtra dans la bdd
-            $newFilename = 'img/' . $safeFilename . '-' . uniqid() . '.' . $upload->guessExtension();
+                //Nom du fichier qui apparîtra dans la bdd
+                $newFilename = 'img/fond.jpg';
+            } else {
+                $originalFilename = pathinfo($upload->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
 
+                //Nom du fichier qui apparîtra dans la bdd
+                $newFilename = 'img/' . $safeFilename . '-' . uniqid() . '.' . $upload->guessExtension();
 
-
-
-            // if ($avatarPresent !== 'default.png') {
-            // Place le fichier dans le chemin défini
-            try {
-                $upload->move(
-                    $this->getParameter('upload_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-
-            //Met à jour le fichier dans la bdd
-            for ($i = 0; $i < 8; $i++) {
-                foreach ($trick->getImages() as $image) {
-                    $image->setPath($newFilename);
+                //Place le fichier dans le chemin défini
+                try {
+                    $upload->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
                 }
             }
-            // }
 
+            //RECUPERE DONNEES DES IMAGES
+
+            $galerieImg = $form->get('images')->getData();
+
+            //Met à jour le fichier dans la bdd
+            foreach ($galerieImg as $image) {
+
+                //Renommer fichier
+                $fichier = 'img/' . md5(uniqid()) . '.' . $image->guessExtension();
+
+                //Place le fichier dans le chemin défini
+                $image->move(
+                    $this->getParameter('upload_directory'),
+                    $fichier
+                );
+
+                //Envoi dans la db
+                $image = new Image();
+                $image->setPath($fichier);
+
+                $trick->addImage($image);
+            }
+
+            //RECUPERE URL DE LA VIDEO
+
+            $url = $form->get('videos')->getData();
+
+            //Envoi dans la db de la video
+            if ($url !== null) {
+                $video = new Video();
+                $video->setUrl($url);
+
+                //Lien avec autre table
+                $trick->addVideo($video);
+            }
+
+            //AJOUT DANS LA BDD
+
+            //Met à jour la table trick
             $trick->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
             $trick->setDateCreation(new \DateTime(date('Y-m-d H:i:s')));
             $trick->setimageMain($newFilename);
@@ -166,8 +201,6 @@ class TricksController extends AbstractController
 
             //Lien avec d'autres bases
             $trick->setUser($this->getUser());
-            //$media->setTrick($trick->getId());
-            //$trick->addImage($image);
 
             //On passe le titre en slug
             $title = $trick->getTitle();
@@ -201,8 +234,18 @@ class TricksController extends AbstractController
      *
      * @return Response
      */
-    public function delete(Trick $trick): Response
+    public function delete(Trick $trick, TrickRepository $trickRepository, $id): Response
     {
+        $trick = $trickRepository->findOneById($id);
+
+        $fileSystem = new Filesystem();
+
+        $fileSystem->remove($trick->getimageMain());
+
+        foreach ($trick->getImages() as $image) {
+            $fileSystem->remove($image->getPath());
+        }
+
         //On instancie doctrine
         $manager = $this->getDoctrine()->getManager();
 

@@ -45,7 +45,6 @@ class TrickFormType extends AbstractType
                 'label' => 'Image principale',
                 'mapped' => false,
                 'required' => false,
-                'data_class' => null,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
@@ -53,30 +52,30 @@ class TrickFormType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'input2',
+                    'accept' => 'image/*',
                 ],
             ])
-            ->add('images', CollectionType::class, [
+            ->add('images', FileType::class, array(
                 'label' => 'Choisir une ou des image(s)',
-                'entry_type' => ImageType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                //'by_reference' => false,
-            ])
-            // ->add('media', FileType::class, [
-            //     'label' => 'Choisir une ou des image(s)',
-            //     'mapped' => false,
-            //     'required' => false,
-            //     //'multiple' => true,
-            //     'data_class' => null,
-            //     'constraints' => [
-            //         new File([
-            //             'maxSize' => '1024k',
-            //         ])
-            //     ],
-            //     'attr' => [
-            //         'class' => 'input2',
-            //     ]
-            // ])
+                'multiple' => true,
+                'mapped' => false,
+                'data_class' => null,
+                'required' => false,
+                'attr' => [
+                    'class' => 'input2',
+                ]
+            ))
+            ->add('videos', TextType::class, array(
+                'label' => false,
+                //'multiple' => false,
+                'mapped' => false,
+                'data_class' => null,
+                'required' => false,
+                'attr' => [
+                    'class' => 'input2',
+                    'placeholder' => 'Choisir une video'
+                ]
+            ))
             ->add('Valider', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn haut',

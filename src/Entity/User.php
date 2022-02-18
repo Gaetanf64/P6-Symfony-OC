@@ -25,6 +25,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est requis."
+     * )
+     * @Assert\Email(
+     *      message = "Veuillez entrer une adresse email valide."
+     * )
+     * @Assert\Length(
+     *      max = 254,
+     *      maxMessage = "Votre adresse email ne peut pas contenir plus de {{ limit }} caractères."
+     * )
      */
     private $email;
 
@@ -53,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(
      *      message = "Ce champ est requis !"
      * )

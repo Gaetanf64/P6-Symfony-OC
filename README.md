@@ -35,4 +35,4 @@ L’ensemble des figures de snowboard doivent être présentes à l’initialisa
 * Créer les tables du projet en appliquant les migrations : ``php bin/console doctrine:migrations:migrate``
 * Installer les DataFixtures (données initiales) : ``php bin/console doctrine:fixtures:load``
 * Pour créer un nouvel administrateur : créer vous un compte utilisateur depuis l'interface, puis mettre le champ 'is_admin' à 1 dans votre application de gestion de base de données
-* Pour les mails, changer l'adresse mail de récpetion et le mot de passe dans le controller ?.php (si vous utlisez un autre host que gmail, entrez aussi les valeurs correspondants à votre host)
+* Pour les mails, changer l'adresse mail de récpetion et le mot de passe dans le .env.sample (si vous utlisez un autre host que gmail, entrez aussi les valeurs correspondants à votre host), puis renommer le fichier en .env

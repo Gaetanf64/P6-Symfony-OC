@@ -32,3 +32,22 @@ nav, footer {
 .flash {
     padding-top: 15px;
 }
+
+.media {
+    margin-top: 5px;
+}
+
+@media all and (max-width: 820px) {
+    .media {
+        margin-top: 20px;
+    }
+
+    .mediaFlex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mediaFlex p {
+        margin-top: 10px;
+    }
+}

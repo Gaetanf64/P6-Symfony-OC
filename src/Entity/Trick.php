@@ -52,7 +52,7 @@ class Trick
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $title;
 
