@@ -15,10 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
 use App\Form\TrickFormType;
+use App\Repository\ImageRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Filesystem\Filesystem;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class TricksController extends AbstractController
 {
@@ -76,6 +78,12 @@ class TricksController extends AbstractController
     {
         $trick = $trickRepository->findOneBySlug($slug);
 
+        //Page par defaut si user non connecté
+        if ($this->getUser() === null) {
+            return $this->render('bundles/TwigBundle/Exception/error403.html.twig');
+        }
+
+        //Redirection si trick non trouvé
         if (!$trick) {
             return $this->redirectToRoute('home');
         }
@@ -85,7 +93,6 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
 
             $trick->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
 
@@ -114,8 +121,9 @@ class TricksController extends AbstractController
      */
     public function add(Request $request, SluggerInterface $slugger): Response
     {
+        //Page par defaut si user non trouvé
         if ($this->getUser() === null) {
-            return $this->render('home/index.html.twig');
+            return $this->render('bundles/TwigBundle/Exception/error403.html.twig');
         }
 
         $trick = new Trick();
@@ -223,6 +231,67 @@ class TricksController extends AbstractController
             'formAdd' => $form->createView(),
             'trick' => $trick,
         ]);
+    }
+
+    /**
+     * Page de suppresion des images pour l'edit d'une trick
+     * 
+     * @Route("/editImages/{slug}", name="editImages")
+     * 
+     */
+    public function editImages(Request $request, TrickRepository $trickRepository, $slug): Response
+    {
+        $trick = $trickRepository->findOneBySlug($slug);
+
+        //Page par defaut si user non connecté
+        if ($this->getUser() === null) {
+            return $this->render('bundles/TwigBundle/Exception/error403.html.twig');
+        }
+
+        //Redirection si trick non trouvé
+        if (!$trick) {
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('tricks/editImages.html.twig', [
+            'trick' => $trick,
+        ]);
+    }
+
+    /**
+     * Delete image par utilisateur
+     *
+     * @Route("/deleteImg/{slug}/image/{id}", name="delete_img")
+     *
+     * @param Trick $trick
+     *
+     * @return Response
+     */
+    public function deleteImg(Request $request, Image $image, ImageRepository $imageRepository, $id, $slug): Response
+    {
+
+        //$trick = $trickRepository->findOneById($slug);
+
+        //$trickRecp = $trick->getSlug();
+
+        //$deleteImg = (int)$request->query->get("image");
+
+        $image = $imageRepository->findOneById($id);
+
+        $fileSystem = new Filesystem();
+
+        $fileSystem->remove($image->getPath());
+
+        //On instancie doctrine
+        $manager = $this->getDoctrine()->getManager();
+
+        $manager->remove($image);
+        $manager->flush();
+
+        $this->addFlash('supprimeImg', "L'image a bien été supprimé.");
+
+        //return $this->redirectToRoute($_SERVER['HTTP_REFERER']);
+        return $this->redirectToRoute('editImages', ['slug' => $slug]);
     }
 
     /**

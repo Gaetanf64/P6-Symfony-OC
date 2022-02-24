@@ -66,7 +66,7 @@ class TrickFormType extends AbstractType
                 ]
             ))
             ->add('videos', TextType::class, array(
-                'label' => false,
+                'label' => 'Ajouter une vidéo',
                 //'multiple' => false,
                 'mapped' => false,
                 'data_class' => null,

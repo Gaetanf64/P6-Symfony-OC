@@ -13,7 +13,7 @@
         <p class="name">Modifier le Trick</p>
         {% if app.user %}
           <div>
-            <a href=""><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
+            <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
           </div>
         {% endif %}
       </div>
@@ -43,7 +43,34 @@
         <p>{{ form_widget(formEdit.description) }}</p>
     </section>
 
+    <section class="haut">
+        <p>{{ form_label(formEdit.imageMain) }}</p>
+        <p>{{ form_widget(formEdit.imageMain) }}</p>
+    </section>
+
+    <section class="haut">
+       {{ form_label(formEdit.images) }}
+       {{ form_widget(formEdit.images) }}
+    </section>
+
+    <section class="haut">
+       {{ form_label(formEdit.videos) }}
+       {{ form_widget(formEdit.videos) }}
+    </section>
+
+    <section class="haut">
+       {{ form_label(formEdit.groupe) }}
+       {{ form_widget(formEdit.groupe) }}
+    </section>
+
      {{ form_end(formEdit) }}
+
+     <section class="haut">
+      <h2>Section Supprimer</h2>
+      <div class="haut">
+        <a href="{{ path('editImages', { 'slug': trick.slug }) }}" class="btn">Supprimer des images</a>
+      </div>
+    </section>
   </div>
 
 {% endblock %}

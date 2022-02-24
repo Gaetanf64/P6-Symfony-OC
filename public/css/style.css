@@ -57,6 +57,10 @@ h2 {
 	justify-content: space-around;
 }
 
+.marginF {
+	margin-bottom: 375px;
+}
+
 /*Menu*/
 
 nav {
@@ -363,7 +367,7 @@ textarea {
 }
 
 .input2 {
-	width: 80%;
+	width: 90%;
     margin-top: 15px;
     border-radius: 2px;
     padding: 8px;
