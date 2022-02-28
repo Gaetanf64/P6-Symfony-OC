@@ -197,6 +197,14 @@ h4 {
     border-radius: 2px;	
 }
 
+#loadLessTrick {
+  display: none;
+}
+
+article.trick, div.comment {
+  display: none;
+}
+
 .center {
 	text-align: center;
 }

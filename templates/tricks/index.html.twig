@@ -64,21 +64,26 @@
 
     <section>
       {% for comment in comments %}
-        <article class="flex listeCom">
-          <div class="boiteProfil">
-            <img src="{{ asset(comment.user.photoProfil) }}" alt="Photo de profil" id="profil" />
-            <p>{{ comment.user.username }}</p>
-          </div>
-          <div class="boiteComs">
-            <p class="boiteCom">{{ comment.content }}</p>
-            <p><span class="bas">Date de création : {{ comment.dateCreation|date("d-m-Y") }}</span></p>
-          </div>
-        </article>
+        <div class="comment">
+          <article class="flex listeCom">
+            <div class="boiteProfil">
+              <img src="{{ asset(comment.user.photoProfil) }}" alt="Photo de profil" id="profil" />
+              <p>{{ comment.user.username }}</p>
+            </div>
+            <div class="boiteComs">
+              <p class="boiteCom">{{ comment.content }}</p>
+              <p><span class="bas">Date de création : {{ comment.dateCreation|date("d-m-Y") }}</span></p>
+            </div>
+          </article>
+        </div>
       {% endfor %}
     </section>
 
-    <section class="plus">
-      <p class="center"><a href="" class="load">Voir plus</a></p>
-    </section>
+    {% if comments | length > 4 %}
+      <section class="plus">
+        <button id="loadMoreComment" type="submit" name="loadNextComment" class="load">Voir plus</button>
+      </section>
+    {% endif %}
+
   </div>
 {% endblock %}

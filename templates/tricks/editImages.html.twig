@@ -6,7 +6,7 @@
 
 
     <section class="flexC centreAll space">
-        {% if trick.images | length > 0  %}
+        {% if trick.images | length > 0 or trick.videos | length > 0  %}
             {% for image in trick.images %}
                 <aside class="boiteImg haut">
                     <a href="{{ asset(image.path) }}"><img src="{{ asset(image.path) }}" alt={{ trick.title }} class="mini" /></a>
@@ -20,15 +20,21 @@
                     </div>
                 </aside>
             {% endfor %}
+        
+            {% for video in trick.videos %}
+                <aside class="boiteImg haut">
+                    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:80%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(video.url) }}" width="100%" height="100%" allowfullscreen></iframe></div>
+                    <a href="{{ path('delete_video', {'id': video.id, 'slug': trick.slug}) }}" class="btn">Supprimer</a>
+                    {% for message in app.flashes('supprimeVideo') %}
+                        <div class="haut">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </aside>
+            {% endfor %}
         {% else %}
-            <p class="marginF">Il n'y a pas d'images disponibles</P>
+            <p class="marginF">Il n'y a pas de médias disponibles</P>
         {% endif %}
-        {% for video in trick.videos %}
-            <aside class="boiteImg haut">
-                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="{{ asset(video.url) }}" width="100%" height="100%" allowfullscreen></iframe></div>
-                <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="{{ asset('img/corbeille.png') }}" alt="Corbeille" /></a>
-            </aside>
-        {% endfor %}
     </section>
 
 {% endblock %}

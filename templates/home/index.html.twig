@@ -11,26 +11,27 @@
   <div class="container">
     <section class="haut flex espace liste" id="tricks">
       {% for trick in tricks %}
-      
-        <article>
-          <img src={{ trick.imageMain }} alt={{ trick.title }} class="tricks" />
-          <div class="details flex">
-            <p><a href={{'tricks/' ~ trick.slug }}>{{ trick.title }}</a></p>
-            {% if app.user %}
-              <div class="bouton">
-                <a href="{{ path('edit_trick', { 'slug': trick.slug }) }}"><img src="img/pencil.png" alt="Editer" /></a>
-                <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="img/corbeille.png" alt="Corbeille" /></a>
-              </div>
-            {% endif %}
-          </div>
-        </article>
-        
+          <article class="trick">
+            <img src={{ trick.imageMain }} alt={{ trick.title }} class="tricks" />
+            <div class="details flex">
+              <p><a href={{'tricks/' ~ trick.slug }}>{{ trick.title }}</a></p>
+              {% if app.user %}
+                <div class="bouton">
+                  <a href="{{ path('edit_trick', { 'slug': trick.slug }) }}"><img src="img/pencil.png" alt="Editer" /></a>
+                  <a href="{{ path('delete_trick', {'id': trick.id}) }}"><img src="img/corbeille.png" alt="Corbeille" /></a>
+                </div>
+              {% endif %}
+            </div>
+          </article>
       {% endfor %}
     </section>
 
-    <section class="haut">
-      <p class="center"><a href="" class="load">Voir plus</a></p>
-    </section>
+    {% if tricks | length > 10 %}
+      <section class="haut center">
+        <button id="loadMoreTrick" type="submit" name="loadNextTrick" class="load">Voir plus</button>
+        <button id="loadLessTrick" type="submit" name="loadNextTrick" class="load">Voir moins</button>
+      </section>
+    {% endif %}
 
   </div>
 {% endblock %}
