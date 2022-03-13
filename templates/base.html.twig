@@ -13,7 +13,7 @@
     </head>
     <body>
         <header>
-            <nav>
+            <nav class="menuNormal">
                 <div class="container flex">
                     <p><a href="/" class=""><img src="{{ asset('img/logo.png') }}" alt="Logo de Snowtricks" id="logo" /></a></p>
                     <ul class="flex menu">
@@ -26,6 +26,27 @@
                         {% else %}
                             <li><a href="{{ path('register') }}">S'enregistrer</a></li>
                             <li><a href="{{ path('account_login') }}">Connexion</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <nav class="menuResponsive">
+                <div class="container flex">
+                    <ul class="flex menu">
+                        <li><a href="/"><img src="{{ asset('img/accueil-Responsive.png') }}" alt="Accueil" /></a></li>
+                        <li><a href="/#tricks"><img src="{{ asset('img/sauvegarder.png') }}" alt="Trciks" /></a></li>
+                        {% if app.user %}
+                            <li>
+                                <a href="{{ path('add_trick') }}"><img src="{{ asset('img/bouton-ajouter.png') }}" alt="Ajouter Trick" />
+                                </a>
+                            </li>
+                            <li><a href="{{ path('profil') }}"><img src="{{ asset('img/profile-user.png') }}" alt="Profil" /></a></li>
+                            <li>
+                                <a href="{{ path('account_logout') }}"><img src="{{ asset('img/logout.png') }}" alt="Déconnexion" /></a>
+                            </li>
+                        {% else %}
+                            <li><a href="{{ path('register') }}"><img src="{{ asset('img/personal.png') }}" alt="S'enregistrer" /></a></li>
+                            <li><a href="{{ path('account_login') }}"><img src="{{ asset('img/login.png') }}" alt="Connexion" /></a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -52,6 +73,14 @@
                     <ul>
                         <li><a href="/">Accueil</a></li>
                         <li><a href="#tricks">Tricks</a></li>
+                        {% if app.user %}
+                            <li><a href="{{ path('add_trick') }}">Ajouter Trick</a></li>
+                            <li><a href="{{ path('profil') }}">Profil</a></li>
+                            <li><a href="{{ path('account_logout') }}">Déconnexion</a></li>
+                        {% else %}
+                            <li><a href="{{ path('register') }}">S'enregistrer</a></li>
+                            <li><a href="{{ path('account_login') }}">Connexion</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 

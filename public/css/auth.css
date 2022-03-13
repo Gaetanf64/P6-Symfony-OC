@@ -51,3 +51,9 @@ nav, footer {
         margin-top: 10px;
     }
 }
+
+@media all and (max-width: 640px) {
+    .hautR {
+        margin-top: 60px;
+    }
+}

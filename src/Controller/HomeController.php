@@ -11,18 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
+     * Page d'accueil du site
+     * 
      * @Route("/", name="home")
      */
     public function index(TrickRepository $trickRepository): Response
     {
 
         $tricks = $trickRepository->findAll();
-
-        // foreach ($tricks as $trick) {
-        //     $trick->medias = $mediaRepository->findOneBy(['trick' => $trick]);
-        // };
-
-        //dump($tricks);
 
         return $this->render('home/index.html.twig', [
             'tricks' => $tricks,

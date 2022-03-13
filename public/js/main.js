@@ -1,3 +1,5 @@
+/*Bouton Voir plus*/
+
 $(function () {
     $("article.trick").slice(0, 10).show();
     $("#loadMoreTrick").on("click", function (e) {

@@ -26,19 +26,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class TricksController extends AbstractController
 {
     /**
+     * Page détails d'un trick
+     * 
      * @Route("/tricks/{slug}", name="tricks")
      */
     public function index($slug, TrickRepository $trickRepository, Request $request, CommentRepository $commentRepository): Response
     {
-        $trick = $trickRepository->findOneBySlug($slug, array('dateCreation' => 'DESC'));
+        //On cherche le trick avec son slug
+        $trick = $trickRepository->findOneBySlug($slug);
 
+        //Si trick n'existe pas, on redirige vers la page d'accueil
         if (!$trick) {
             return $this->redirectToRoute('home');
         }
 
+        //On récupère les commentaires par trick
         $comments = $commentRepository->findByTrick($trick, array('dateCreation' => 'DESC'));
 
-
+        //PARTIE AJOUT D'UN COMMENTAIRE
         $comment = new Comment();
 
         $form = $this->createForm(CommentFormType::class, $comment);
@@ -63,6 +68,7 @@ class TricksController extends AbstractController
 
             $this->addFlash('comment', 'Votre commentaire a bien été enregistré');
 
+            //On regénère la page de la trick
             return $this->redirectToRoute('tricks', ['slug' => $slug]);
         }
 
@@ -74,12 +80,33 @@ class TricksController extends AbstractController
     }
 
     /**
+     * Page de voir les medias pour le responsive
+     * 
+     * @Route("/tricks/medias/{slug}", name="medias")
+     */
+    public function medias($slug, TrickRepository $trickRepository): Response
+    {
+
+        $trick = $trickRepository->findOneBySlug($slug);
+
+        if (!$trick) {
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('tricks/medias.html.twig', [
+            'trick' => $trick,
+        ]);
+    }
+
+    /**
      * @Route("/edit/{slug}", name="edit_trick")
      */
     public function edit(Request $request, $slug, TrickRepository $trickRepository, SluggerInterface $slugger): Response
     {
+        //On cherche le trick avec son slug
         $trick = $trickRepository->findOneBySlug($slug);
 
+        //ON récupere l'image principale deja présente
         $imageMainPresent = $trick->getimageMain();
 
         //Page par defaut si user non connecté
@@ -104,7 +131,7 @@ class TricksController extends AbstractController
             $upload = $form->get('imageMain')->getData();
 
             if ($upload === null) {
-
+                //Si aucune image principale choisie, on garde l'image deja présente
                 $trick->setimageMain($imageMainPresent);
             } else {
                 //Supprime les données de l'ancienne image principale
@@ -174,9 +201,6 @@ class TricksController extends AbstractController
 
             //Met à jour la table trick
             $trick->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));
-            $trick->setDateCreation(new \DateTime(date('Y-m-d H:i:s')));
-            //$trick->setimageMain($newFilename);
-
 
             //Lien avec d'autres bases
             $trick->setUser($this->getUser());
@@ -195,9 +219,7 @@ class TricksController extends AbstractController
             //Envoi dans la base de données
             $manager->flush();
 
-
-            // $this->addFlash('edit', 'Votre trick a été modifié avec succés !');
-
+            //On dirige vers la page de détails d'un trick
             return $this->redirectToRoute('tricks', ['slug' => $trick->getSlug()]);
         }
 
@@ -360,28 +382,23 @@ class TricksController extends AbstractController
      */
     public function deleteImg(Request $request, Image $image, ImageRepository $imageRepository, $id, $slug): Response
     {
-
-        //$trick = $trickRepository->findOneById($slug);
-
-        //$trickRecp = $trick->getSlug();
-
-        //$deleteImg = (int)$request->query->get("image");
-
+        //On récupère l'image avec son id
         $image = $imageRepository->findOneById($id);
 
         $fileSystem = new Filesystem();
 
+        //On supprime le fichiers du système
         $fileSystem->remove($image->getPath());
 
         //On instancie doctrine
         $manager = $this->getDoctrine()->getManager();
 
+        //On supprime de la db
         $manager->remove($image);
         $manager->flush();
 
         $this->addFlash('supprimeImg', "L'image a bien été supprimé.");
 
-        //return $this->redirectToRoute($_SERVER['HTTP_REFERER']);
         return $this->redirectToRoute('editImages', ['slug' => $slug]);
     }
 
@@ -397,21 +414,12 @@ class TricksController extends AbstractController
     public function deleteVideo(Request $request, Video $video, VideoRepository $videoRepository, $id, $slug): Response
     {
 
-        //$trick = $trickRepository->findOneById($slug);
-
-        //$trickRecp = $trick->getSlug();
-
-        //$deleteImg = (int)$request->query->get("image");
-
         $video = $videoRepository->findOneById($id);
-
-        // $fileSystem = new Filesystem();
-
-        // $fileSystem->remove($video->getPath());
 
         //On instancie doctrine
         $manager = $this->getDoctrine()->getManager();
 
+        //On supprime de la db
         $manager->remove($video);
         $manager->flush();
 
@@ -437,7 +445,9 @@ class TricksController extends AbstractController
 
         $fileSystem = new Filesystem();
 
-        $fileSystem->remove($trick->getimageMain());
+        if ($trick->getimageMain() !== "img/fond.jpg") {
+            $fileSystem->remove($trick->getimageMain());
+        }
 
         foreach ($trick->getImages() as $image) {
             $fileSystem->remove($image->getPath());

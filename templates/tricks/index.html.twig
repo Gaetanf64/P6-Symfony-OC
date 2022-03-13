@@ -20,7 +20,7 @@
       <a href="{{ asset(trick.imageMain) }}"><img src="{{ asset(trick.imageMain) }}" alt={{ trick.slug }} id="une"/></a> 
     </section>
 
-    <section class="flexTrick space">
+    <section class="flexTrick space displayNormal">
       {% for image in trick.images %}
         <aside class="boiteImg">
           <a href="{{ asset(image.path) }}"><img src="{{ asset(image.path) }}" alt={{ trick.title }} class="mini" /></a>
@@ -33,23 +33,24 @@
       {% endfor %}
     </section>
 
+    <section class="haut displayResponsive">
+      <p><a href="{{ path('medias', { 'slug': trick.slug }) }}" class="load">Voir les médias</a></p>
+    </section>
+
     <section class="haut">
       <p>{{ trick.description }}</p>
       <p class="auteur">Crée par {{ trick.user.username }}</p>
     </section>
 
-    <section class="haut flex space">
-      <p class="infos">{{ trick.groupe.name }}</p>
-      <p class="infos">Date de création : {{ trick.dateCreation|date("d-m-Y") }}</p>
-      <p class="infos">Date de modification : {{ trick.dateUpdate|date("d-m-Y") }}</p>
+    <section class="haut flex space espace">
+      <p class="infos haut">{{ trick.groupe.name }}</p>
+      <p class="infos haut">Date de création : {{ trick.dateCreation|date("d-m-Y") }}</p>
+      <p class="infos haut">Date de modification : {{ trick.dateUpdate|date("d-m-Y") }}</p>
     </section>
 
     {% if app.user %}
       <section class="haut coms">
-        {# <form action="" method="POST" class="flex item space">
-          <textarea rows="3" cols="50" maxlength="200"></textarea>
-          <button type="submit" class="btn">Laisser un commentaire</button>
-        </form> #}
+  
           {{ form_start(formComment) }}
             {{ form_widget(formComment.content) }}
           {{ form_end(formComment) }}
@@ -65,7 +66,7 @@
     <section>
       {% for comment in comments %}
         <div class="comment">
-          <article class="flex listeCom">
+          <article class="flex listeCom flexCresponsive">
             <div class="boiteProfil">
               <img src="{{ asset(comment.user.photoProfil) }}" alt="Photo de profil" id="profil" />
               <p>{{ comment.user.username }}</p>

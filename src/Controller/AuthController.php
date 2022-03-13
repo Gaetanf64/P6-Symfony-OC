@@ -110,16 +110,11 @@ class AuthController extends AbstractController
      */
     public function confirm(Request $request, UserRepository $userRepository): Response
     {
-        // if (!$request->query->get('id')) {
-        //     throw new Exception('Veuillez cliquer sur le lien fournit dans l\'email qui vous a été envoyé pour vous valider !');
-        // }
-        // if (!$request->query->get('token')) {
-        //     throw new Exception('Veuillez cliquer sur le lien fournit dans l\'email qui vous a été envoyé pour vous valider !');
-        // }
-
+        //On récupère les valeurs
         $id = $request->query->get('id');
         $token = $request->query->get('token');
 
+        //On cherche l'user avec son id
         $user = $userRepository->findOneBy(['id' => $id]);
         if ($user->getId() && $user->getToken() === $token) {
             $user->setToken(null)
@@ -138,8 +133,6 @@ class AuthController extends AbstractController
 
             return $this->redirectToRoute('account_login');
         }
-
-        //throw new Exception('Veuillez cliquer sur le lien fournit dans l\'email qui vous a été envoyé pour vous valider !');
     }
 
     /**
@@ -147,10 +140,7 @@ class AuthController extends AbstractController
      */
     public function forgotPassword(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $encoder, MailerInterface $mailer): Response
     {
-
         $user = new User();
-
-        //$user = $userRepository->findOneByEmail($email);
 
         //Create Form
         $form = $this->createForm(ForgotPasswordFormType::class, $user);
@@ -161,19 +151,13 @@ class AuthController extends AbstractController
         //vérification si form envoyé et données valides
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //$user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $user->email]);
-
+            //On récupère la valeur de l'email
             $email = $form->getData('email');
 
-            //dump($email);
-
+            //On cherche l'user avec son email
             $user = $userRepository->findOneBy(['email' => $email->getEmail()]);
 
-
-            //dump($user);
-
-            //$user = $userRepository->findOneBy(['email' => $email->getUsername()]);
-
+            //On génère le token pour recuperer le password
             $token = uniqid();
 
             $user->setToken($token);
@@ -212,13 +196,17 @@ class AuthController extends AbstractController
     }
 
     /**
+     * New Password pour le mot de passe oublié
+     * 
      * @Route("/newPassword", name="newPassword")
      */
     public function newPassword(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $encoder): Response
     {
+        //On récupère les valeurs
         $token = $request->query->get('token');
         $id = $request->query->get('id');
 
+        //On cherche l'user avec son id
         $user = $userRepository->findOneBy(['id' => $id]);
 
         $form = $this->createForm(NewPasswordFormType::class, $user);
@@ -227,6 +215,8 @@ class AuthController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($user->getId() && $user->getToken() === $token) {
+
+                //On recupere le password et on l'encode
                 $newPassword = $user->getPassword();
                 $password = $encoder->encodePassword($user, $newPassword);
                 $user->setToken(null)
@@ -242,8 +232,6 @@ class AuthController extends AbstractController
                 $manager->flush();
 
                 $this->addFlash('newPassword', 'Votre mot de passe a été mis à jour.');
-
-                //return $this->redirectToRoute('account_login');
             }
         }
 
@@ -320,6 +308,7 @@ class AuthController extends AbstractController
 
         //PARTIE CHANGER MOT DE PASSE
 
+        //On instancie la vérification du password
         $passwordReset = new PasswordProfil;
 
         $formPass = $this->createForm(PasswordFormType::class, $passwordReset);
@@ -328,8 +317,10 @@ class AuthController extends AbstractController
 
         if ($formPass->isSubmitted() && $formPass->isValid()) {
 
+            //On récupere le password et on encode
             $newPassword = $passwordReset->getNewPasswordProfil();
             $password = $encoder->encodePassword($user, $newPassword);
+
             $user->setPassword($password);
 
             $user->setDateUpdate(new \DateTime(date('Y-m-d H:i:s')));

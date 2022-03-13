@@ -63,6 +63,10 @@ h2 {
 
 /*Menu*/
 
+.menuResponsive {
+	display: none;
+}
+
 nav {
 	width: 100%;
 	/* position: fixed; */
@@ -210,6 +214,10 @@ article.trick, div.comment {
 }
 
 /*Tricks Pages*/
+
+.displayResponsive {
+	display: none;
+}
 
 .flexTrick {
 	display: flex;
@@ -424,6 +432,75 @@ input[type=file]::-webkit-file-upload-button {
 }
 
 @media all and (max-width: 640px) {
+	.menuResponsive {
+		display: block;
+	}
+
+	.menuNormal {
+		display: none;
+	}
+
+	.menu li {
+		/* margin-left:30px; */
+		padding-top: 10px;
+		padding-bottom: 10px;	
+	}
+
+	.container {
+		width: 60%;
+    	margin: auto;
+	}
+
+	footer .container div {
+		padding: 5%;
+	}
+
+	.accroche {
+		font-size: 20px;
+		padding-top: 250px;	
+	}
+
+	.liste article {
+		width: 100%;
+	}
+
+	.boiteImg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.plan {
+		margin-top: -800px; 
+	}
+
+	.infos {
+		width: 80%;
+	}
+
+	.flexCresponsive {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.displayNormal {
+		display: none;
+	}
+
+	.displayResponsive {
+		display: block;
+	}
+
+	.mini {
+		height: 100%;
+	}
+
+	.btn {
+		width: 60%;
+	}
+
+	.hautResponsive {
+		margin-top: 10%;
+	}
 }
 
 
