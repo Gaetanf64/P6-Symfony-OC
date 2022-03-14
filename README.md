@@ -35,11 +35,11 @@ L’ensemble des figures de snowboard doivent être présentes à l’initialisa
 ```https://github.com/Gaetanf64/P6-Symfony-OC.git```
 * Installer les dépendances 
 ``composer install``
+* Copier le fichier .env_sample et le renommer en .env
 * Mettre à jour la base de données en entrant votre nom d'utilisateur et le mot de passe dans le .env_sample:
 ```DATABASE_URL=mysql://user:password@127.0.0.1:3306/snowtricks```
 * Pour les mails, changer l'adresse mail de récpetion et le mot de passe dans le .env.sample (si vous utlisez un autre host que gmail, entrez aussi les valeurs correspondants à votre host)
 ```MAILER_DSN=smtp://ADRESS:PASSWORD@smtp.gmail.com?verify_peer=0```
-* Renommer le fichier .env_sample en .env
 * Créer la base de données si elle n'existe pas déjà en entrant cette commande à la racine du projet : 
 ```php bin/console doctrine:database:create```
 * Créer les tables du projet en appliquant les migrations : 
